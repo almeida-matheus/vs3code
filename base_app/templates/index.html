@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+
+        <main class="row">
+
+            <div id="section-list" class="col-12 col-md-5 mt-0">
+                <h6>{{ bucket_name }}</h6>
+                <ul id="list-group" class="list-group">
+                    {% for o in objects %}
+                    <div class="object">
+                        <div class="object1 d-flex justify-content-between align-items-center">
+
+                            <span class="object-name">{{ o.key }}</span>
+
+                            {# <div class="d-inline-block"> #}
+                            <div class="d-flex justify-content-between">
+
+                                {% if ("text" in o.key | file_type) or ("application" in o.key | file_type) %}
+
+                                <form class="get-form px-1" action="{{ url_for('base_view.read') }}" method="POST">
+                                <input type="hidden" name="key" value="{{ o.key }}">
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        <i class="far fa-eye"></i>
+                                    </button>
+                                </form>
+
+                                {% else %}
+                                {% endif %}
+
+                                <form class="get-form px-1" action="{{ url_for('base_view.download') }}" method="POST">
+                                <input type="hidden" name="key" value="{{ o.key }}">
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </form>
+
+
+                                <form class="delete-form px-1" action="{{ url_for('base_view.delete') }}" method="POST">
+                                    <input type="hidden" name="key" value="{{ o.key }}">
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-trash-alt"></i>
+                                    </button>
+                                </form>
+
+                            </div>
+                            {# <span class="object-type">type</span> #}
+                        </div>
+                        <div class="object2 d-flex justify-content-between">
+                            <span class="object-type">{{ o.last_modified | datetime_format }}</span>
+                            <span class="object-type">{{ o.key | file_type }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    {# <details>
+                        <summary>Nome da pasta 1</summary>
+                        <div class="object">
+                            <span class="object-name">name</span><span class="object-type">type</span>
+                        </div>
+                    </details> #}
+
+                </ul>
+            </div>
+
+            <div id="section-text" class="col-12 col-md-7 box-text flex-column d-flex">
+                <form action="{{ url_for('base_view.update') }}" method="post">
+
+                    <label for="content_object" class="form-label"></label>
+                    <textarea id="content_object" name="content_object" spellcheck="false" placeholder="...">
+{{ content_object }}
+                    </textarea>
+                    {# <input type="submit"> #}
+
+                    <div class="row pt-3">
+                        <div class="col-12 col-lg-8 pb-2 pb-lg-0">
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <button type="submit" class="btn btn-success btn-lg w-100">
+                                <i class="fas fa-save"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </main>
+
+{% endblock %}
