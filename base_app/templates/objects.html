@@ -4,7 +4,25 @@
         <main class="row">
 
             <div id="section-list" class="col-12 col-md-5 mt-0">
-                <h6>{{ bucket_name }}</h6>
+
+                <div class="bucket-name">
+                    <span>{{ bucket_name }}</span>
+
+                    <form class="upload-form" action="{{ url_for('base_view.upload', bucket_name=bucket_name) }}" method="POST" enctype="multipart/form-data">
+                        {# <p><input type="file" name="file"></p> #}
+                        <div class="bucket-name-upload">
+                            <input type="file" name="file" class="btn btn-success btn-sm">
+
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <i class="fas fa-file-import"></i>
+                            </button>
+                        </div>
+                    </form>
+                    {# <button type="submit" class="btn btn-success btn-sm">
+                        <i class="fas fa-plus"></i>
+                    </button> #}
+                </div>
+
                 <ul id="list-group" class="list-group">
                     {% for o in objects %}
                     <div class="object">
@@ -27,7 +45,7 @@
                                 {% else %}
                                 {% endif %}
 
-                                <form class="get-form px-1" action="{{ url_for('base_view.download') }}" method="POST">
+                                <form class="get-form px-1" action="{{ url_for('base_view.download', bucket_name=bucket_name) }}" method="POST">
                                 <input type="hidden" name="key" value="{{ o.key }}">
                                     <button type="submit" class="btn btn-success btn-sm">
                                         <i class="fas fa-download"></i>

@@ -21,6 +21,11 @@ def index_objects(bucket_name, content_object=''):
     if session.get('content_object'): content_object=session['content_object']
 
     objects = inst_s3.list_all_objects(bucket_name)
+
+    if not objects:
+        flash('Cannot open this bucket')
+        return redirect(url_for('base_view.index_buckets'))
+
     return render_template('objects.html', bucket_name=bucket_name, objects=objects, content_object=content_object)
 
 @base_view.route("/<bucket_name>/read", methods=["POST"])
@@ -48,11 +53,10 @@ def delete(bucket_name):
 
     return redirect(url_for('base_view.index_objects', bucket_name=bucket_name))
 
-@base_view.route("/download", methods=["POST"])
-def download():
+@base_view.route("/<bucket_name>/download", methods=["POST"])
+def download(bucket_name):
     ''' get content from a file in the bucket and download it'''
     key = request.form['key']
-    bucket_name = inst_s3.get_bucket_name()
     file_obj_content = inst_s3.download_object(bucket_name, key)
 
     flash('File download successfully')
@@ -74,4 +78,17 @@ def update(bucket_name, key=None):
         flash('File updated successfully')
 
     session['content_object'] = content_object
+    return redirect(url_for('base_view.index_objects', bucket_name=bucket_name))
+
+@base_view.route("/<bucket_name>/upload", methods=["POST"])
+def upload(bucket_name):
+    ''' upload file in bucket'''
+
+    file = request.files['file']
+
+    status_update = inst_s3.upload_object(bucket_name, file)
+
+    if status_update:
+        flash('File updated successfully')
+
     return redirect(url_for('base_view.index_objects', bucket_name=bucket_name))
