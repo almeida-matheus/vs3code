@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+        <div class="d-sm-flex align-items-sm-center justify-content-sm-center">
+            <div class="flex-column">
+                <h5 class="text-center fw-bold">BUCKETS</h5>
+                <div id="list-buckets" class="list-group shadow-lg text-center">
+                {% for b in buckets %}
+
+                    <form action="{{ url_for('base_view.index_buckets') }}" method="POST">
+                    <input type="hidden" name="bucket_name" value="{{ b.name }}">
+                        <button type="submit" target="_blank" class="list-group-item list-group-item-action m-0">
+                            {{ b.name }}
+                        </button>
+                    </form>
+
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

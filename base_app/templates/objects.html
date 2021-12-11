@@ -17,7 +17,7 @@
 
                                 {% if ("text" in o.key | file_type) or ("application" in o.key | file_type) %}
 
-                                <form class="get-form px-1" action="{{ url_for('base_view.read') }}" method="POST">
+                                <form class="get-form px-1" action="{{ url_for('base_view.read', bucket_name=bucket_name) }}" method="POST">
                                 <input type="hidden" name="key" value="{{ o.key }}">
                                     <button type="submit" class="btn btn-primary btn-sm">
                                         <i class="far fa-eye"></i>
@@ -35,7 +35,7 @@
                                 </form>
 
 
-                                <form class="delete-form px-1" action="{{ url_for('base_view.delete') }}" method="POST">
+                                <form class="delete-form px-1" action="{{ url_for('base_view.delete', bucket_name=bucket_name) }}" method="POST">
                                     <input type="hidden" name="key" value="{{ o.key }}">
                                     <button type="submit" class="btn btn-danger btn-sm">
                                         <i class="fa fa-trash-alt"></i>
@@ -63,7 +63,7 @@
             </div>
 
             <div id="section-text" class="col-12 col-md-7 box-text flex-column d-flex">
-                <form action="{{ url_for('base_view.update') }}" method="post">
+                <form action="{{ url_for('base_view.update', bucket_name=bucket_name) }}" method="post">
 
                     <label for="content_object" class="form-label"></label>
                     <textarea id="content_object" name="content_object" spellcheck="false" placeholder="...">

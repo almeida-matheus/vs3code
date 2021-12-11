@@ -15,11 +15,11 @@
 <body>
     <div class="container-fluid px-5">
 
-        <header class="mt-2 mb-5 text-center">
-            <div class="pt-3 font-weight-bold">
+        <header class="my-5">
+            <a href="{{ url_for('base_view.index_buckets') }}">
                 <img src="{{ url_for('base_view.static', filename='assets/aws-icon.png') }}">
                 <span>vs3code</span>
-            </div>
+            </a>
         </header>
 
         {% block content %}
