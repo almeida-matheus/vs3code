@@ -2,28 +2,28 @@ import boto3
 from botocore.exceptions import ClientError
 import sys
 sys.path.append("...")
-from config import BUCKET_NAME, ACCESS_KEY, SECRET_KEY
+from config import AWS_STORAGE_BUCKET_NAME, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 
 class S3:
 
     def __init__(self):
-        if ACCESS_KEY and SECRET_KEY:
+        if AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY:
             self.s3_resource = boto3.resource(
                 's3',
-                aws_access_key_id=ACCESS_KEY,
-                aws_secret_access_key=SECRET_KEY
+                aws_access_key_id=AWS_ACCESS_KEY_ID,
+                aws_secret_access_key=AWS_SECRET_ACCESS_KEY
             )
             self.s3_client = boto3.resource(
                 's3',
-                aws_access_key_id=ACCESS_KEY,
-                aws_secret_access_key=SECRET_KEY
+                aws_access_key_id=AWS_ACCESS_KEY_ID,
+                aws_secret_access_key=AWS_SECRET_ACCESS_KEY
             )
         else:
             self.s3_resource = boto3.resource('s3')
             self.s3_client = boto3.client('s3')
 
     def get_bucket_name(self):
-        return BUCKET_NAME
+        return AWS_STORAGE_BUCKET_NAME
 
     def list_all_buckets(self):
         return self.s3_resource.buckets.all()

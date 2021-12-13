@@ -2,3 +2,4 @@ arrow==1.2.1
 boto3==1.19.1
 botocore==1.22.1
 Flask==2.0.2
+python-dotenv==0.19.2
